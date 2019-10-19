@@ -48,9 +48,10 @@ const app = new Vue({
 			if (this.token == "") {
 				return;
 			}
-			fetch("http://search-in-video.tookmund.com/video?token=" + encodeURI(app.token), {  
+			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'GET',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'}
+				headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'},
+				body: encodeURI("token=" + app.token)
 			})
 			.then( function (response) {
 				if (response.status != 200) {
