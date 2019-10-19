@@ -51,7 +51,7 @@ def runv2json(video, h, results):
             fps = subprocess.run([pwd+"getimages.sh", filename], check=True, universal_newlines=True, stdout=subprocess.PIPE).stdout.split('\n')[0]
             sd = ocr.img2text(td, fps)
             subprocess.run([pwd+"getaudio.sh", filename])
-            ad = audio.aud2text(filename+".mp3", h)
+            ad = audio.aud2text(filename+".wav", h)
             d = {'screen': sd, 'audio': ad}
             jv = json.dumps(d)
             s = io.BytesIO(jv.encode())
