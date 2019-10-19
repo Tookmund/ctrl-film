@@ -61,7 +61,7 @@ const app = new Vue({
 		
 		checkToken: function () {
 			var app = this;
-			if (this.token == "") {
+			if (!this.isSearching || this.token == "") {
 				return;
 			}
 			fetch("http://search-in-video.tookmund.com/video/?token="+encodeURI(app.token))
@@ -86,6 +86,7 @@ const app = new Vue({
 						text: json['audio']
 					});
 					app.isFormState = false;
+					app.isSearching = false;
 				});
 			});
 		}
