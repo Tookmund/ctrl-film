@@ -26,7 +26,7 @@ def download(filename):
     try:
         s3_client.download_fileobj(BUCKET_NAME, filename, f)
         f.seek(0)
-        return f
+        return f.read().decode()
     except ClientError as e:
         logging.error(e)
         return False
