@@ -48,9 +48,7 @@ const app = new Vue({
 			if (this.token == "") {
 				return;
 			}
-			fetch("http://search-in-video.tookmund.com/video?token=" + encodeURI(app.token), {  
-				method: 'GET'
-			})
+			fetch("http://search-in-video.tookmund.com/video?token=" + encodeURI(app.token))
 			.then( function (response) {
 				if (response.status != 200) {
 					return;
