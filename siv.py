@@ -20,7 +20,7 @@ manager = multiprocessing.Manager()
 results = manager.dict()
 
 def v2json(video, h):
-    if processes[h] is None and results[h] is None:
+    if not h in processes and not h in results:
         results[h] = None
         p = multiprocessing.Process(target=runv2json, args=(video, h, results))
         processes[h] = p
