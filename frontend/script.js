@@ -17,6 +17,7 @@ const app = new Vue({
 				body: encodeURI("url=" + app.url)
 			})
 			.then( function (data) {
+				console.log(data);
 				data.json().then( function (json) {
 					while (app.text.length > 0) {
 						app.text.pop();
