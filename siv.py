@@ -6,7 +6,8 @@ import os
 import tempfile
 import json
 import io
-from multiprocessing import Process
+import time
+import multiprocessing
 
 import s3
 import ocr
@@ -14,16 +15,18 @@ import frametimes
 import hash
 
 processes = {}
-results = {}
+manager = multiprocessing.Manager()
+results = manager.dict()
+
 def v2json(video, h):
-    p = Process(target=runv2json, args=(video, h, results))
+    p = multiprocessing.Process(target=runv2json, args=(video, h, results))
     processes[h] = p
     results[h] = None
     p.start()
 
 
 def getresults(h):
-    if results[h] is None and !processes[h].is_alive():
+    if results[h] is None and not processes[h].is_alive():
         raise Exception(h)
     return results[h]
 
@@ -36,7 +39,6 @@ def runv2json(video, h, results):
         else:
             filename=video
         screen = h+".screen"
-        print(screen)
         sobj = s3.download(screen)
         if not sobj:
             if video.startswith('http'):
@@ -51,4 +53,8 @@ def runv2json(video, h, results):
             results[h] = sobj
 
 if __name__ == '__main__':
-    print(v2json(sys.argv[1], hash.hash(sys.argv[1])))
+    h = hash.hash(sys.argv[1])
+    v2json(sys.argv[1], h)
+    while(getresults(h) is None):
+        time.sleep(5)
+    print(getresults(h))
