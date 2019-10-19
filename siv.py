@@ -28,7 +28,10 @@ def v2json(video, h):
 def getresults(h):
     if results[h] is None and not processes[h].is_alive():
         raise Exception(h)
-    return results[h]
+    ret = results[h]
+    del results[h]
+    del processes[h]
+    return ret
 
 def runv2json(video, h, results):
     pwd = os.getcwd()+'/'
@@ -55,6 +58,8 @@ def runv2json(video, h, results):
 if __name__ == '__main__':
     h = hash.hash(sys.argv[1])
     v2json(sys.argv[1], h)
-    while(getresults(h) is None):
+    result = None
+    while(result is None):
         time.sleep(5)
-    print(getresults(h))
+        result = getresults(h)
+    print(result)
