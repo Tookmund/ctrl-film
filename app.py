@@ -8,11 +8,6 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(16)
 
 
-@app.route('/')
-def index():
-    return 'Hello World!\n'
-
-
 @app.route('/video/', methods=['GET', 'POST'])
 def video():
     if request.method == "POST":
