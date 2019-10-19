@@ -2,3 +2,4 @@ pytesseract
 youtube_dl
 flask
 flask-wtf
+boto3
