@@ -41,7 +41,7 @@ def download(filename):
 
 def delete(filename, bucket=BUCKET_NAME):
     try:
-        s3_client.delete_object(bucket, filename)
+        s3_client.delete_object(Bucket=bucket, Key=filename)
     except ClientError as e:
         logging.error(e)
         return False
