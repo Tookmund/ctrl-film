@@ -30,5 +30,5 @@ def aud2text(filename, h):
     if status['TranscriptionJob']['TranscriptionJobStatus'] == 'COMPLETED':
         r = requests.get(status['TranscriptionJob']['Transcript']['TranscriptFileUri'])
         j = json.loads(r.text)
-        return j['results']['transcripts']['0']['transcript']
+        return j['results']['transcripts'][0]['transcript']
     return {}
