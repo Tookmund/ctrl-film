@@ -25,6 +25,7 @@ def aud2text(filename, h):
         print("Audio not ready yet...")
         time.sleep(5)
     s3.delete(objname)
+    print(status)
     if status['TranscriptionJob']['TranscriptionJobStatus'] == 'COMPLETED':
         r = requests.get(status['TranscriptionJob']['Transcript']['TranscriptFileUri'])
         return json.loads(r.text())
