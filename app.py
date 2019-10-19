@@ -18,9 +18,9 @@ def video():
     if request.method == "POST":
         token = 'INVALID'
         if 'file' in request.files:
-            api.processFile(request.files['file'])
+            token = api.processFile(request.files['file'])
         else:
-            api.processURL(request.form['url'])
+            token = api.processURL(request.form['url'])
         return jsonify({'token': token}), 202
     else:
         # return jsonify({'message': 'Video data retrieval not yet available.'}), 501
