@@ -7,7 +7,7 @@ def img2text(folder):
     s = ''
     for pic in os.listdir(folder):
         if pic.endswith('.png'):
-           s += pytesseract.image_to_string(folder+'/'+pic)
+            ts = convertToTimestamp(float(fps), int(t))
     return s
 
 if __name__ == '__main__':
