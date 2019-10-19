@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import tempfile
 import os
 import forms
@@ -30,4 +30,7 @@ def index():
 
 @app.route('/video/', methods=['GET', 'POST'])
 def video():
-    return formToJSON()
+    if request.method == "POST":
+        return formToJSON()
+    else:
+        return jsonify({'message': 'Video data retrieval not yet available.'}), 501
