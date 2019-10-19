@@ -74,7 +74,7 @@ const app = new Vue({
 					while (app.text.length > 0) {
 						app.text.pop();
 					}
-					for (var timestamp in json) {
+					for (var timestamp in json['screen']) {
 						app.text.push({
 							timestamp: timestamp,
 							text: json[timestamp]
