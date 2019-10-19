@@ -12,6 +12,7 @@ const app = new Vue({
 			var app = this;
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
+				headers: {'Content-Type': 'application/x-www-form-url-encoded', 'Accept': 'application/json'},
 				body: "url=" + app.url
 			})
 			.then( function (data) {
