@@ -38,3 +38,11 @@ def download(filename):
     except ClientError as e:
         logging.error(e)
         return False
+
+def delete(filename, bucket=BUCKET_NAME):
+    try:
+        s3_client.delete_object(bucket, filename)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True

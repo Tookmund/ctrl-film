@@ -8,7 +8,8 @@ import s3
 
 def aud2text(filename, h):
     transcribe = boto3.client('transcribe')
-    s3.uploadfile(filename, f"pending-{h}.wav")
+    objname = f"pending-{h}.wav"
+    s3.uploadfile(filename, objname)
     job_name = h+os.urandom(16).hex()
     job_uri = f"https://s3.us-east-1.amazonaws.com/search-in-video/pending-{h}.wav"
     transcribe.start_transcription_job(
@@ -23,6 +24,7 @@ def aud2text(filename, h):
             break
         print("Audio not ready yet...")
         time.sleep(5)
+    s3.delete(objname)
     if status['TranscriptionJob']['TranscriptionJobStatus'] == 'COMPLETED':
         r = requests.get(status['TranscriptionJob']['Transcript']['TranscriptFileUri'])
         return json.loads(r.text())
