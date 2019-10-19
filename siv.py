@@ -22,8 +22,10 @@ def v2text(video):
         return ocr.img2text(td, fps)
 
 def search(video, string):
-    text = v2text(video)
-    print(text)
+    d = v2text(video)
+    for k,v in d.items():
+        if string in v:
+            print(k, ':', v)
 
 if __name__ == '__main__':
-    search(sys.argv[1],'')
+    search(sys.argv[1], sys.argv[2])
