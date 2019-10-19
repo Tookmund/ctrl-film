@@ -25,7 +25,8 @@ def download(filename):
     f = tempfile.TemporaryFile()
     try:
         s3_client.download_fileobj(BUCKET_NAME, filename, f)
+        f.seek(0)
+        return f
     except ClientError as e:
         logging.error(e)
         return False
-    return f
