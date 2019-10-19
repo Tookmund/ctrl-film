@@ -28,6 +28,22 @@ const app = new Vue({
 				this.statusMessage = "Error :( please try again."
 			});
 		},
+		submitFile: function() {
+			this.statusMessage = "Loading...";
+			this.isSearching = true;
+			fetch("http://search-in-video.tookmund.com/video", {  
+				method: 'POST',
+				body: document.querySelection('input[type=file]').files[0]
+			})
+			.then( function (response) {
+				response.json().then( function (json) {
+					app.token = json["token"]
+				});
+			})
+			.catch( function (error) {
+				this.statusMessage = "Error :( please try again."
+			});
+		}
 		
 		goBack: function () {
 			this.isFormState = true;
