@@ -24,4 +24,4 @@ def video():
         return jsonify({'token': token}), 202
     else:
         # return jsonify({'message': 'Video data retrieval not yet available.'}), 501
-        return api.getTranscript()
+        return api.getTranscript(request.form['token'])
