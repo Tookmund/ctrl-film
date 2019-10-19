@@ -1,9 +1,10 @@
-from tempfile import TemporaryDirectory
+from flask import jsonify
 from werkzeug.utils import secure_filename
 import os
 
 from hash import hash
 import siv
+import s3
 
 
 def processURL(url):
@@ -28,3 +29,11 @@ def processFile(file):
     siv.v2json(path, token)
 
     return token
+
+
+def getTranscript(token):
+    result = s3.download(f'{token}.screen')
+    if not result:
+        return jsonify({'message': 'Transcript not found.'}), 404
+    else:
+        return result
