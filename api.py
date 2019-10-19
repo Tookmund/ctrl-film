@@ -19,6 +19,8 @@ def processURL(url):
 def processFile(file):
     # Get filename
     filename = secure_filename(file.filename)
+    if(filename == ''):
+        filename = 'video'
 
     # Hash file
     token = hash(file)
