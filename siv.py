@@ -10,7 +10,6 @@ import io
 import s3
 import ocr
 import frametimes
-import transcribe
 import hash
 
 def v2json(video, h):
@@ -24,8 +23,6 @@ def v2json(video, h):
         screen = h+".screen"
         print(screen)
         sobj = s3.download(screen)
-        #audio = filename+".audio"
-        #aobj = s3.download(audio)
         if not sobj:
             if video.startswith('http'):
                 ytdl = subprocess.run(["youtube-dl", video], check=True)
@@ -34,13 +31,9 @@ def v2json(video, h):
             jv = json.dumps(sd)
             s = io.BytesIO(jv.encode())
             s3.upload(s, screen)
-            sobj = jv
-            #ad = transcribe(td+filename)
-            #ja = json.dumps(d)
-            #a = io.BytesIO(jv.encode())
-            #s3.upload(a, audio)
-            #aobj = a
-        return sobj
+            return jv
+        else:
+            return sobj
 
 if __name__ == '__main__':
     print(v2json(sys.argv[1], hash.hash(sys.argv[1])))
