@@ -5,7 +5,8 @@ const app = new Vue({
 		url: "",
 		text: [],
 		query: "",
-		statusMessage: ""
+		statusMessage: "",
+		token: ""
 	},
 	methods: {
 		submitURL: function () {
@@ -16,8 +17,28 @@ const app = new Vue({
 				headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'},
 				body: encodeURI("url=" + app.url)
 			})
-			.then( function (data) {
-				console.log(data);
+			.then( function (response) {
+				response.json().then( function (json) {
+					console.log(json);
+				});
+			})  
+			.catch( function (error) {
+				this.statusMessage = "Error :( please try again."
+			});
+		},
+		
+		goBack: function () {
+			this.isFormState = true;
+			this.query = "";
+			this.errorMessage = "";
+			this.token = "";
+		}
+	}
+});
+
+/*
+
+console.log(data);
 				data.json().then( function (json) {
 					while (app.text.length > 0) {
 						app.text.pop();
@@ -30,16 +51,5 @@ const app = new Vue({
 					}
 					app.isFormState = false;
 				});
-			})  
-			.catch( function (error) {
-				this.statusMessage = "Error :( please try again."
-			});
-		},
-		
-		goBack: function () {
-			this.isFormState = true;
-			this.query = "";
-			this.errorMessage = "";
-		}
-	}
-});
+				
+*/
