@@ -60,6 +60,7 @@ def runv2json(video, h, results):
             results[h] = jv
         else:
             results[h] = jb
+        print("FINISHED "+h)
 
 if __name__ == '__main__':
     h = hash.hash(sys.argv[1])
