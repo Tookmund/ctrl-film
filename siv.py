@@ -29,8 +29,7 @@ def v2json(video):
                 os.replace(pwd+video, video)
         else:
             return fobj.read()
-        videofile = [fn for fn in os.listdir(td)][0]
-        fps = subprocess.run([pwd+"getimages.sh", videofile], check=True, capture_output=True, text=True).stdout.split('\n')[0]
+        fps = subprocess.run([pwd+"getimages.sh", filename], check=True, capture_output=True, text=True).stdout.split('\n')[0]
         d = ocr.img2text(td, fps)
         j = json.dumps(d)
         s = io.BytesIO(j.encode())
