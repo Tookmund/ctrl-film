@@ -6,13 +6,28 @@ import os
 import tempfile
 import json
 import io
+from multiprocessing import Process
 
 import s3
 import ocr
 import frametimes
 import hash
 
+processes = {}
+results = {}
 def v2json(video, h):
+    p = Process(target=runv2json, args=(video, h, results))
+    processes[h] = p
+    results[h] = None
+    p.start()
+
+
+def getresults(h):
+    if results[h] is None and !processes[h].is_alive():
+        raise Exception(h)
+    return results[h]
+
+def runv2json(video, h, results):
     pwd = os.getcwd()+'/'
     with tempfile.TemporaryDirectory() as td:
         os.chdir(td)
@@ -31,9 +46,9 @@ def v2json(video, h):
             jv = json.dumps(sd)
             s = io.BytesIO(jv.encode())
             s3.upload(s, screen)
-            return jv
+            results[h] = jv
         else:
-            return sobj
+            results[h] = sobj
 
 if __name__ == '__main__':
     print(v2json(sys.argv[1], hash.hash(sys.argv[1])))
