@@ -20,10 +20,11 @@ manager = multiprocessing.Manager()
 results = manager.dict()
 
 def v2json(video, h):
-    results[h] = None
-    p = multiprocessing.Process(target=runv2json, args=(video, h, results))
-    processes[h] = p
-    p.start()
+    if processes[h] is None and results[h] is None:
+        results[h] = None
+        p = multiprocessing.Process(target=runv2json, args=(video, h, results))
+        processes[h] = p
+        p.start()
 
 
 def getresults(h):
