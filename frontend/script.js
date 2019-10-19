@@ -10,13 +10,13 @@ const app = new Vue({
 	methods: {
 		submitURL: function () {
 			var app = this;
+			this.statusMessage = "Loading...";
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
 				headers: {'Content-Type': 'application/x-www-form-url-encoded', 'Accept': 'application/json'},
-				body: "url=" + app.url
+				body: "url=" + encodeURI(app.url)
 			})
 			.then( function (data) {
-				this.statusMessage = "Loading...";
 				data.json().then( function (json) {
 					while (app.text.length > 0) {
 						app.text.pop();
@@ -30,8 +30,8 @@ const app = new Vue({
 					app.isFormState = false;
 				});
 			})  
-			.catch( function (error) {  
-				this.errorMessage = "Error :( please try again."
+			.catch( function (error) {
+				this.statusMessage = "Error :( please try again."
 			});
 		},
 		
