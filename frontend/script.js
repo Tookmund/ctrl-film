@@ -4,6 +4,7 @@ const app = new Vue({
 		isFormState: true, // false = search results page
 		url: "",
 		text: [],
+		audio: "",
 		query: "",
 		statusMessage: "",
 		token: "",
@@ -81,13 +82,10 @@ const app = new Vue({
 							text: screen[timestamp]
 						});
 					}
-					app.text.push({
-						timestamp: "Audio Transcript",
-						text: json['audio']
-					});
-					app.isFormState = false;
-					app.isSearching = false;
+					app.audio = json['audio'];
 				});
+				app.isFormState = false;
+				app.isSearching = false;
 			});
 		}
 	},
