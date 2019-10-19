@@ -81,6 +81,10 @@ const app = new Vue({
 							text: screen[timestamp]
 						});
 					}
+					app.text.push({
+						timestamp: "Audio Transcript",
+						text: json['audio']
+					});
 					app.isFormState = false;
 				});
 			});
