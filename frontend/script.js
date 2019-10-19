@@ -13,7 +13,7 @@ const app = new Vue({
 			this.statusMessage = "Loading...";
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
-				headers: {'Content-Type': 'application/x-www-form-url-encoded', 'Accept': 'application/json'},
+				headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'},
 				body: encodeURI("url=" + app.url)
 			})
 			.then( function (data) {
