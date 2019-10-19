@@ -41,14 +41,14 @@ def runv2json(video, h, results):
     with tempfile.TemporaryDirectory() as td:
         os.chdir(td)
         if video.startswith('http'):
-            filename = subprocess.run(['youtube-dl', '--get-filename', video], universal_newlines=True, capture_output=True).stdout[:-1]
+            filename = subprocess.run(['youtube-dl', '--get-filename', video], universal_newlines=True, stdout=subprocess.PIPE).stdout[:-1]
         else:
             filename=video
         jb = s3.download(h)
         if not jb:
             if video.startswith('http'):
                 ytdl = subprocess.run(["youtube-dl", video], check=True)
-            fps = subprocess.run([pwd+"getimages.sh", filename], check=True, capture_output=True, text=True).stdout.split('\n')[0]
+            fps = subprocess.run([pwd+"getimages.sh", filename], check=True, universal_newlines=True, stdout=subprocess.PIPE).stdout.split('\n')[0]
             sd = ocr.img2text(td, fps)
             subprocess.run([pwd+"getaudio.sh", filename])
             ad = audio.aud2text(filename+".mp3", h)
