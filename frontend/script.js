@@ -43,7 +43,7 @@ const app = new Vue({
 			.catch( function (error) {
 				this.statusMessage = "Error :( please try again."
 			});
-		}
+		},
 		
 		goBack: function () {
 			this.isFormState = true;
