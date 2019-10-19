@@ -80,5 +80,10 @@ const app = new Vue({
 			}
 			return false;
 		}
+	},
+	mounted: function () {
+		window.setInterval(() => {
+			this.checkToken()
+		}, 5000)
 	}
 });
