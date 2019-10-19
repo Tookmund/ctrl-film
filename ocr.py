@@ -3,6 +3,12 @@ import os
 import sys
 import pytesseract
 
-for pic in os.listdir(sys.argv[1]):
-    if pic.endswith('.png'):
-        print(pytesseract.image_to_string(sys.argv[1]+'/'+pic))
+def img2text(folder):
+    s = ''
+    for pic in os.listdir(folder):
+        if pic.endswith('.png'):
+           s += pytesseract.image_to_string(folder+'/'+pic)
+    return s
+
+if __name__ == '__main__':
+    img2text(sys.argv[1])
