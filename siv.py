@@ -20,10 +20,11 @@ manager = multiprocessing.Manager()
 results = manager.dict()
 
 def v2json(video, h):
-    results[h] = None
-    p = multiprocessing.Process(target=runv2json, args=(video, h, results))
-    processes[h] = p
-    p.start()
+    if not h in processes and not h in results:
+        results[h] = None
+        p = multiprocessing.Process(target=runv2json, args=(video, h, results))
+        processes[h] = p
+        p.start()
 
 
 def getresults(h):
@@ -59,6 +60,7 @@ def runv2json(video, h, results):
             results[h] = jv
         else:
             results[h] = jb
+        print("FINISHED "+h)
 
 if __name__ == '__main__':
     h = hash.hash(sys.argv[1])

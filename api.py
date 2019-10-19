@@ -19,12 +19,14 @@ def processURL(url):
 def processFile(file):
     # Get filename
     filename = secure_filename(file.filename)
+    if(filename == ''):
+        filename = 'video'
 
     # Hash file
     token = hash(file)
 
     # Save upload to directory
-    path = os.path.join('/uploads', f'{filename}_{token}')
+    path = os.path.join('/tmp', f'{filename}_{token}')
     file.save(path)
     siv.v2json(path, token)
 
