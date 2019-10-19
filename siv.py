@@ -4,11 +4,12 @@ import sys
 import subprocess
 import os
 import tempfile
+import json
 
 import ocr
 import frametimes
 
-def v2text(video):
+def v2dict(video):
     pwd = os.getcwd()+'/'
     with tempfile.TemporaryDirectory() as td:
         os.chdir(td)
@@ -21,8 +22,11 @@ def v2text(video):
         fps = subprocess.run([pwd+"getimages.sh", videofile], check=True, capture_output=True, text=True).stdout.split('\n')[0]
         return ocr.img2text(td, fps)
 
+def v2json(video):
+    return json.dumps(v2dict(video))
+
 def search(video, string):
-    d = v2text(video)
+    d = v2dict(video)
     for k,v in d.items():
         if string in v:
             print(k, ':', v)
