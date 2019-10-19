@@ -18,9 +18,8 @@ def v2text(video):
             ext = os.path.splitext(video)[1]
             os.replace(pwd+video, "video"+ext)
         videofile = [fn for fn in os.listdir(td) if fn.startswith("video")][0]
-        fps = subprocess.run([pwd+"getimages.sh", videofile], check=True).stdout
-        print(fps)
-        return ocr.img2text(td)
+        fps = subprocess.run([pwd+"getimages.sh", videofile], check=True, capture_output=True, text=True).stdout.split('\n')[0]
+        return ocr.img2text(td, fps)
 
 def search(video, string):
     text = v2text(video)
