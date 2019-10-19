@@ -1,2 +1,4 @@
 pytesseract
 youtube_dl
+flask
+flask-wtf
