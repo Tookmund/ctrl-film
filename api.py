@@ -32,7 +32,7 @@ def processFile(file):
 
 
 def getTranscript(token):
-    result = s3.download(f'{token}.screen')
+    result = s3.download(f'{token}')
     if not result:
         return jsonify({'message': 'Transcript not found.'}), 404
     else:

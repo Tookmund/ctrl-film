@@ -3,4 +3,4 @@ def convertToTimestamp(fps, imgnum):
     secondNum = frameNum // fps
     mins = secondNum // 60
     seconds = secondNum % 60
-    return str(int(mins))+":"+str(int(seconds))
+    return str(int(mins))+":"+f"{int(seconds):02d}"

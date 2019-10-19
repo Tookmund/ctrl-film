@@ -12,6 +12,7 @@ import multiprocessing
 import s3
 import ocr
 import frametimes
+import audio
 import hash
 
 processes = {}
@@ -19,15 +20,17 @@ manager = multiprocessing.Manager()
 results = manager.dict()
 
 def v2json(video, h):
+    results[h] = None
     p = multiprocessing.Process(target=runv2json, args=(video, h, results))
     processes[h] = p
-    results[h] = None
     p.start()
 
 
 def getresults(h):
-    if results[h] is None and not processes[h].is_alive():
-        raise Exception(h)
+    if results[h] is None:
+        processes[h].join(timeout=0)
+        if processes[h].is_alive() is None:
+            raise Exception(h)
     ret = results[h]
     del results[h]
     del processes[h]
@@ -41,19 +44,21 @@ def runv2json(video, h, results):
             filename = subprocess.run(['youtube-dl', '--get-filename', video], text=True, capture_output=True).stdout[:-1]
         else:
             filename=video
-        screen = h+".screen"
-        sobj = s3.download(screen)
-        if not sobj:
+        jb = s3.download(h)
+        if not jb:
             if video.startswith('http'):
                 ytdl = subprocess.run(["youtube-dl", video], check=True)
             fps = subprocess.run([pwd+"getimages.sh", filename], check=True, capture_output=True, text=True).stdout.split('\n')[0]
             sd = ocr.img2text(td, fps)
-            jv = json.dumps(sd)
+            subprocess.run([pwd+"getaudio.sh", filename])
+            ad = audio.aud2text(filename+".mp3", h)
+            d = {'screen': sd, 'audio': ad}
+            jv = json.dumps(d)
             s = io.BytesIO(jv.encode())
-            s3.upload(s, screen)
+            s3.upload(s, h)
             results[h] = jv
         else:
-            results[h] = sobj
+            results[h] = jb
 
 if __name__ == '__main__':
     h = hash.hash(sys.argv[1])

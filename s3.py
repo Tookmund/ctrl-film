@@ -21,6 +21,14 @@ def upload(file_obj, object_name, bucket=BUCKET_NAME):
         return False
     return True
 
+def uploadfile(filename, objname, bucket=BUCKET_NAME):
+    try:
+        response = s3_client.upload_file(filename, bucket, objname)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
+
 def download(filename):
     f = tempfile.TemporaryFile()
     try:
