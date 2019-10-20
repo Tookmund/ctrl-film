@@ -12,10 +12,13 @@ const app = new Vue({
 	},
 	methods: {
 		submitURL: function () {
+			if (this.url == undefined || this.url == null | this.url == "") {
+				return;
+			}
 			var app = this;
 			this.statusMessage = "Loading...";
 			this.isSearching = true;
-			fetch("http://search-in-video.tookmund.com/video", {  
+			fetch("https://search-in-video.tookmund.com/video", {  
 				method: 'POST',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
 				body: encodeURI("url=" + app.url)
@@ -38,7 +41,7 @@ const app = new Vue({
 			this.isSearching = true;
 			formData = new FormData();
 			formData.append('file', file);
-			fetch("http://search-in-video.tookmund.com/video", {  
+			fetch("https://search-in-video.tookmund.com/video", {  
 				method: 'POST',
 				body: formData
 			})
@@ -71,7 +74,7 @@ const app = new Vue({
 			if (!this.isSearching || this.token == "") {
 				return;
 			}
-			fetch("http://search-in-video.tookmund.com/video/?token="+encodeURI(app.token))
+			fetch("https://search-in-video.tookmund.com/video/?token="+encodeURI(app.token))
 			.then( function (response) {
 				if (response.status != 200) {
 					return;
