@@ -11,16 +11,16 @@
 	<body>
 		<div id="app">
 			<div v-if="isFormState" id="form">
-					<h1>CTRL+Film</h1>
-					<input type="text" v-model="url" placeholder="YouTube URL" v-bind:readonly="isReadOnly"> <button v-on:click="submitURL()">Search...</button>
+					<h1>CTRL + Film</h1>
+					<input type="text" v-model="url" placeholder="YouTube URL" v-bind:readonly="isReadOnly"> <button v-on:click="submitURL()">Search</button>
 					<p>- or -</p>
-					<input type="file" placeholder="File"> <button v-on:click="submitFile()">Search...</button>
+					<input type="file" placeholder="File"> <button v-on:click="submitFile()">Search</button>
 					<p>{{ statusMessage }}</p>
 					<button v-if="isSearching" v-on:click="cancel()">Cancel</button>
 			</div>
 			<div v-else>
 				<div id="controls">
-					<input type="text" v-model="query" placeholder="Search..."> <button v-on:click="goBack()">Back</button>
+					<input type="text" v-model="query" placeholder="Search"> <button v-on:click="goBack()">Back</button>
 				</div>
 				<div v-for="line in text" v-if="(line.text != '') && (query == '' || line.text.includes(query))">
 					<h2>{{ line.timestamp }}</h2>
