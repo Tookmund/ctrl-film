@@ -43,6 +43,7 @@ def getstatus(h):
     return status[h]
 
 def runv2json(video, h, results):
+    status[h] = "Downloading from S3..."
     pwd = os.getcwd()+'/'
     with tempfile.TemporaryDirectory() as td:
         os.chdir(td)
@@ -50,25 +51,24 @@ def runv2json(video, h, results):
             filename = subprocess.run(['youtube-dl', '--get-filename', video], universal_newlines=True, stdout=subprocess.PIPE).stdout[:-1]
         else:
             filename=video
-        status[h] = "Downloading from S3"
         jb = s3.download(h)
         if not jb:
             if video.startswith('http'):
-                status[h] = "Downloading file"
+                status[h] = "Downloading video..."
                 ytdl = subprocess.run(["youtube-dl", video], check=True)
             status[h] = "Getting images..."
             fps = subprocess.run([pwd+"getimages.sh", filename], check=True, universal_newlines=True, stdout=subprocess.PIPE).stdout.split('\n')[0]
-            status[h] = "OCRing images"
+            status[h] = "OCRing images..."
             sd = ocr.img2text(td, fps)
-            status[h] = "Extracting audio"
+            status[h] = "Extracting audio..."
             subprocess.run([pwd+"getaudio.sh", filename])
-            status[h] = "Transcribing audio"
+            status[h] = "Transcribing audio..."
             ad = audio.aud2text(filename+".wav", h)
-            status[h] = "Converting to JSON"
+            status[h] = "Converting to JSON..."
             d = {'screen': sd, 'audio': ad}
             jv = json.dumps(d)
             s = io.BytesIO(jv.encode())
-            status[h] = "Uploading to S3"
+            status[h] = "Uploading to S3..."
             s3.upload(s, h)
             results[h] = jv
         else:
