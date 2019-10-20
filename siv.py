@@ -60,6 +60,15 @@ def runv2json(video, h, results):
             if video.startswith('http'):
                 status[h] = "Downloading video..."
                 ytdl = subprocess.run(["youtube-dl", video], check=True)
+                try:
+                    open(filename)
+                except FileNotFoundError:
+                    filename = os.path.splitext(filename)[0]+".mkv"
+                    try:
+                        open(filename)
+                    except FileNotFoundError:
+                        status[h] = "ERROR. Try again"
+                        return
             status[h] = "Getting images..."
             fps = subprocess.run([pwd+"getimages.sh", filename], check=True, universal_newlines=True, stdout=subprocess.PIPE).stdout.split('\n')[0]
             status[h] = "OCRing images..."
