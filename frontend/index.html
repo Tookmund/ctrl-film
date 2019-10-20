@@ -11,7 +11,7 @@
 	<body>
 		<div id="app">
 			<div v-if="isFormState" id="form">
-					<h1>Search in a video...</h1>
+					<h1>CTRL+Film</h1>
 					<input type="text" v-model="url" placeholder="YouTube URL" v-bind:readonly="isReadOnly"> <button v-on:click="submitURL()">Search...</button>
 					<p>- or -</p>
 					<input type="file" placeholder="File"> <button v-on:click="submitFile()">Search...</button>
