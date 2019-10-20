@@ -15,7 +15,9 @@ def video():
         if 'file' in request.files:
             token = api.processFile(request.files['file'])
         else:
-            token = api.processURL(request.form['url'])
+            url = request.form['url']
+            if url != '':
+                token = api.processURL(request.form['url'])
         return jsonify({'token': token}), 202
     else:
         if 'token' in request.form:
