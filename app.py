@@ -13,6 +13,7 @@ def video():
     if request.method == "POST":
         token = 'INVALID'
         if 'file' in request.files:
+            print(request.files)
             token = api.processFile(request.files['file'])
         else:
             token = api.processURL(request.form['url'])
