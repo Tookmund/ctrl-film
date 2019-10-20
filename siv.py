@@ -37,6 +37,7 @@ def getresults(h):
     ret = results[h]
     del results[h]
     del processes[h]
+    del status[h]
     return ret
 
 def getstatus(h):
