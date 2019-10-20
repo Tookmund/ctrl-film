@@ -41,7 +41,10 @@ def getresults(h):
     return ret
 
 def getstatus(h):
-    return status[h]
+    try:
+        return status[h]
+    except KeyError k:
+        return "Oops, Lost the Video. Please Try Again."
 
 def runv2json(video, h, results):
     status[h] = "Downloading from S3..."
