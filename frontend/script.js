@@ -4,6 +4,7 @@ const app = new Vue({
 		isFormState: true, // false = search results page
 		url: "",
 		text: [],
+		audio: "",
 		query: "",
 		statusMessage: "",
 		token: "",
@@ -61,7 +62,7 @@ const app = new Vue({
 		
 		checkToken: function () {
 			var app = this;
-			if (this.token == "") {
+			if (!this.isSearching || this.token == "") {
 				return;
 			}
 			fetch("http://search-in-video.tookmund.com/video/?token="+encodeURI(app.token))
@@ -81,12 +82,10 @@ const app = new Vue({
 							text: screen[timestamp]
 						});
 					}
-					app.text.push({
-						timestamp: "Audio Transcript",
-						text: json['audio']
-					});
-					app.isFormState = false;
+					app.audio = json['audio'];
 				});
+				app.isFormState = false;
+				app.isSearching = false;
 			});
 		}
 	},
