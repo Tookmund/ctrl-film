@@ -37,7 +37,7 @@ const app = new Vue({
 			formData.append('file', file);
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
-				body: file
+				body: formData
 			})
 			.then( function (response) {
 				response.json().then( function (json) {
