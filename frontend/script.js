@@ -76,6 +76,11 @@ const app = new Vue({
 			}
 			fetch("https://search-in-video.tookmund.com/video/?token="+encodeURI(app.token))
 			.then( function (response) {
+				if (response.status == 404) {
+					response.json().then( function (json) {
+						app.statusMessage = json["message"];
+					});
+				}
 				if (response.status != 200) {
 					return;
 				}
