@@ -26,7 +26,7 @@ def processFile(file):
     token = hash(file)
 
     # Save upload to directory
-    path = os.path.join('/tmp', f'{filename}_{token}')
+    path = os.path.join('/tmp', f'{token}_{filename}')
     file.save(path)
     siv.v2json(path, token)
 
