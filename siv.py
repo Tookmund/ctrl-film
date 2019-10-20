@@ -43,7 +43,7 @@ def getresults(h):
 def getstatus(h):
     try:
         return status[h]
-    except KeyError k:
+    except KeyError:
         return "Oops, Lost the Video. Please Try Again."
 
 def runv2json(video, h, results):
