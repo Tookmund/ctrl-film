@@ -25,6 +25,10 @@ input, button {
 	padding: 5px;
 }
 
+button:hover {
+	background-color: #EEEEEE;
+}
+
 #controls {
 	display: flex;
 	position: fixed;
