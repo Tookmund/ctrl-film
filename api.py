@@ -37,6 +37,6 @@ def processFile(file):
 def getTranscript(token):
     result = s3.download(f'{token}')
     if not result:
-        return jsonify({'message': 'Transcript not found.'}), 404
+        return jsonify({'message': siv.getstatus(token)}), 404
     else:
         return result
