@@ -22,12 +22,14 @@ def processFile(file):
     if(filename == ''):
         filename = 'video'
 
-    # Hash file
-    token = hash(file)
 
     # Save upload to directory
     path = os.path.join('/tmp', f'{token}_{filename}')
     file.save(path)
+
+    # Hash file
+    file.seek(0)
+    token = hash(file)
     siv.v2json(path, token)
 
     return token
