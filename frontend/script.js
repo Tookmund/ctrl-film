@@ -32,9 +32,12 @@ const app = new Vue({
 		submitFile: function() {
 			this.statusMessage = "Loading...";
 			this.isSearching = true;
+			formData = new FormData();
+			file = document.querySelection('input[type=file]').files[0];
+			formData.append('file', file);
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
-				body: document.querySelection('input[type=file]').files[0]
+				body: file
 			})
 			.then( function (response) {
 				response.json().then( function (json) {
