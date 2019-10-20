@@ -34,6 +34,9 @@ const app = new Vue({
 			this.isSearching = true;
 			formData = new FormData();
 			file = document.querySelector('input[type=file]').files[0];
+			if (file == undefined) {
+				return;
+			}
 			formData.append('file', file);
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
