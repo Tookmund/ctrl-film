@@ -30,13 +30,13 @@ const app = new Vue({
 			});
 		},
 		submitFile: function() {
-			this.statusMessage = "Loading...";
-			this.isSearching = true;
-			formData = new FormData();
 			file = document.querySelector('input[type=file]').files[0];
 			if (file == undefined) {
 				return;
 			}
+			this.statusMessage = "Loading...";
+			this.isSearching = true;
+			formData = new FormData();
 			formData.append('file', file);
 			fetch("http://search-in-video.tookmund.com/video", {  
 				method: 'POST',
