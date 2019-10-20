@@ -7,4 +7,5 @@ def hash(thing):
     else:
         thing.seek(0)
         sha256.update(thing.read())
+        thing.seek(0)
     return sha256.hexdigest()
